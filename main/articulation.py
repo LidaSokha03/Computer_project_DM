@@ -1,0 +1,13 @@
+def find_points(graph):
+    """
+    ...
+    """
+    ...
+
+
+def fing_bridges(graph):
+    """
+    ...
+    """
+    ...
+
