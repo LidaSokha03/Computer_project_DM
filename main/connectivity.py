@@ -67,7 +67,3 @@ def find_conn_comp(graph):
 
     return all_components
 
-
-if __name__ == "__main__":
-    import doctest
-    print(doctest.testmod())

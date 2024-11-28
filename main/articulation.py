@@ -78,8 +78,3 @@ def bridges(graph):
 
 
     return bridges_list
-
-
-if __name__ == "__main__":
-    import doctest
-    print(doctest.testmod())

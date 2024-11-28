@@ -39,5 +39,3 @@ def write_graph(graph, new_filename):
                 file.write(f'{str(main_node)},')
                 file.write(str(node))
                 file.write('\n')
-
-write_graph({1: [2, 3], 2: [1, 4], 3: [1], 4: [2]}, 'graph1.csv')
