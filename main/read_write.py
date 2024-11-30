@@ -29,7 +29,6 @@ def read_graph(filename, is_oriented: bool):
                             graph[el].append(line[1])
                         elif i == 1:
                             graph[el].append(line[0])
-
     return graph
 
 
