@@ -3,7 +3,7 @@ Set of functions for working with file
 Reading graph from file
 Writing graph in new file
 """
-def read_graph(filename):
+def read_graph(filename, is_oriented: bool):
     """
     Function that reads graph from file
     :param filename: str, the name or path to the file
@@ -19,9 +19,16 @@ def read_graph(filename):
                     nodes.add(node)
                     graph[node] = []
             if len(graph.keys()) == len(nodes):
-                for i, el in enumerate(line):
-                    if i == 0:
-                        graph[el].append(line[1])
+                if is_oriented:
+                    for i, el in enumerate(line):
+                        if i == 0:
+                            graph[el].append(line[1])
+                else:
+                    for i, el in enumerate(line):
+                        if i == 0:
+                            graph[el].append(line[1])
+                        elif i == 1:
+                            graph[el].append(line[0])
 
     return graph
 
