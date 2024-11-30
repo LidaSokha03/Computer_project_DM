@@ -10,7 +10,7 @@ graph_ = {
     6: [4,7],
     7: [5,6]}
 
-def kosaraju_scc(graph):
+def kosaraju_scc(graph, is_directed: bool):
     """
     Знаходить компоненти сильної зв'язності (SCC) орієнтованого графа.
 
@@ -23,7 +23,8 @@ def kosaraju_scc(graph):
     >>> kosaraju_scc(graph_)
     [[0, 1, 2], [4, 6, 7], [3, 5]]
     """
-
+    if not is_directed:
+        return -1
     #1)
     visited = {v: False for v in graph}
     stack = []
