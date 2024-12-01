@@ -1,6 +1,6 @@
 """A function to find a connected components in graph"""
 
-def find_conn_comp(graph):
+def find_conn_comp(graph, is_oriented: bool):
     """
     Finds all connected components in an undirected graph.
 
@@ -25,7 +25,7 @@ def find_conn_comp(graph):
         ...     4: [3],
         ...     5: []
         ... }
-        >>> find_conn_comp(graph)
+        >>> find_conn_comp(graph, 0)
         [[0, 1, 2], [3, 4], [5]]
         
         >>> graph = {
@@ -39,10 +39,12 @@ def find_conn_comp(graph):
         ...     7: [6],
         ...     8: [0, 2]
         ... }
-        >>> find_conn_comp(graph)
+        >>> find_conn_comp(graph, 0)
         [[0, 1, 2, 8], [3], [4, 5, 6, 7]]
-
     """
+    if is_oriented:
+        raise ValueError("The graph is oriented. Searching for connected components is not possible.")
+
     num_vertises = len(graph)
 
     visited = [0] * num_vertises
