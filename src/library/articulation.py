@@ -18,7 +18,7 @@ def dfs(graph, node, visited):
             dfs(graph, neighbour, visited)
 
 
-def find_points(graph):
+def find_points(graph, is_oriented: bool):
     """
     Finds the connection points in an undirected graph.
     Returns the list of such points.
@@ -33,9 +33,11 @@ def find_points(graph):
     7: [4, 8],\
     8: [5, 7]\
     }
-    >>> find_points(graph)
+    >>> find_points(graph, is_oriented=False)
     [2, 3]
     """
+    if is_oriented is True:
+        raise ValueError("This function only works with undirected graphs, not oriented ones.")
     connection_points = []
     for key in graph:
         copied_graph = deepcopy(graph)
