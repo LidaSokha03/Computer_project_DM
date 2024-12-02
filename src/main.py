@@ -2,12 +2,12 @@
 CLI for the whole project
 """
 import argparse
-from articulation import find_points
-from articulation import bridges
-from components import find_conn_comp
-from graph_visual import graph_visualization
-from read_write import read_graph
-from strong_con import kosaraju_scc
+from library.articulation import find_points
+from library.articulation import bridges
+from library.components import find_conn_comp
+from library.graph_visual import graph_visualization
+from library.read_write import read_graph
+from library.strong_con import kosaraju_scc
 
 
 def main():
