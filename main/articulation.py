@@ -51,10 +51,13 @@ def find_points(graph):
     return connection_points
 
 
-def bridges(graph):
+def bridges(graph, is_oriented: bool):
     """
     Find all bridges in an undirected graph.
     """
+    if is_oriented:
+        raise ValueError('The graph is oriented.')
+
     bridges_list = []
     copied_graph = graph.copy()
     for edge in copied_graph:
