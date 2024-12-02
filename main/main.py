@@ -15,26 +15,27 @@ def main():
     ...
     """
     parser = argparse.ArgumentParser(
-        prog='Аналіз звʼязності графів',
-        description='Програма виконує читання графу з файлу, шукає компоненти звʼязності\
-(також сильної звʼязності), пошук точок сполучення та мостів на графі')
+        prog='Graph connectivity analysis',
+        description='The program reads a graph from a file, searches for connectivity components\
+(also of strong connectivity), finding connection points and bridges on the graph')
 
-    parser.add_argument('file', type = str, help='Файл графу')
+
+    parser.add_argument('file', type = str, help='Graph file')
     parser.add_argument(
         "--is_oriented",
         action = 'store_true',
-        help="Орієнтованість/неорієнтованість графу")
+        help="Oriented/Disoriented")
     parser.add_argument(
         "--connectivity",
         action = 'store_true',
-        help="Знаходження точок сполучення")
-    parser.add_argument("--bridges", action = 'store_true', help="Знаходження мостів")
-    parser.add_argument("--components", action = 'store_true', help="Компоненти звʼязності")
+        help="Finding connection points")
+    parser.add_argument("--bridges", action = 'store_true', help="Finding bridges")
+    parser.add_argument("--components", action = 'store_true', help="Connectivity components")
     parser.add_argument(
         "--strong_components",
         action = 'store_true',
-        help="Компоненти сильної звʼязності")
-    parser.add_argument("--visualisation", action = 'store_true', help="Візуалізація графу")
+        help="Strong connectivity components")
+    parser.add_argument("--visualisation", action = 'store_true', help="Graph visualization")
 
     args = parser.parse_args()
 
@@ -42,21 +43,38 @@ def main():
     graph = read_graph(args.file, oriented)
 
     if args.connectivity:
-        result = find_points(graph, oriented)
-        print(f'Точки сполучення в графі: {result}')
+        try:
+            result = find_points(graph, oriented)
+            print(f'Connecting points: {result}')
+        except ValueError:
+            print("The graph is oriented. Searching for connecting points is not possible.")
+
     elif args.bridges:
-        result = bridges(graph, oriented)
-        print(f'Мости у графі: {result}')
+        try:
+            result = bridges(graph, oriented)
+            print(f'Bridges: {result}')
+        except ValueError:
+            print("The graph is oriented. Searching for bridges is not possible.")
+
     elif args.components:
-        result = find_conn_comp(graph, oriented)
-        print(f'Компоненти звʼязності: {result}')
+        try:
+            result = find_conn_comp(graph, oriented)
+            print(f'Connectivity components: {result}')
+        except ValueError:
+            print("The graph is oriented. Searching for connected components is not possible.")
+
     elif args.strong_components:
         result = kosaraju_scc(graph, oriented)
-        print(f'Компоненти сильної звʼязності: {result}')
+        if result == -1:
+            print("The graph is not oriented. Searching for strong connected components is not possible.")
+        else:
+            print(f'Strong connectivity components: {result}')
+
     elif args.visualisation:
         graph_visualization(graph, oriented)
+
     else:
-        print("Помилка: необхідно вибрати одну з функцій.")
+        print("Error. You should choose any function.")
         parser.print_help()
 
 
