@@ -45,9 +45,7 @@ def find_conn_comp(graph, is_oriented: bool):
     if is_oriented:
         raise ValueError("The graph is oriented. Searching for connected components is not possible.")
 
-    num_vertises = len(graph)
-
-    visited = [0] * num_vertises
+    visited = {v:0 for v in graph}
     all_components = []
 
     def dfs(v, component):
@@ -57,11 +55,11 @@ def find_conn_comp(graph, is_oriented: bool):
         """
         visited[v] = True
         component.append(v)
-        for neighbor in range(num_vertises):
+        for neighbor in graph:
             if neighbor in graph[v] and not visited[neighbor]:
                 dfs(neighbor, component)
 
-    for v in range(num_vertises):
+    for v in graph:
         if not visited[v]:
             component = []
             dfs(v, component)
@@ -69,7 +67,6 @@ def find_conn_comp(graph, is_oriented: bool):
 
     return all_components
 
-if __name__ == "__main__":
-    import doctest
-    print(doctest.testmod())
-
+# if __name__ == "__main__":
+#     import doctest
+#     print(doctest.testmod())
