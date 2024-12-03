@@ -56,6 +56,16 @@ def find_points(graph, is_oriented: bool):
 def bridges(graph, is_oriented: bool):
     """
     Find all bridges in an undirected graph.
+    Returns a list of tuples of bridges.
+    >>> graph = {\
+    1: [2],\
+    2: [1, 3],\
+    3: [2],\
+    5: [6],\
+    6: [5]\
+    }
+    >>> bridges(graph, is_oriented=False)
+    [(1, 2), (2, 3), (5, 6)]
     """
     if is_oriented:
         raise ValueError('The graph is oriented.')
@@ -64,11 +74,6 @@ def bridges(graph, is_oriented: bool):
     copied_graph = graph.copy()
     for edge in copied_graph:
         graph.pop(edge)
-        values = []
-        for key in graph:
-            for value in graph.get(key):
-                values.append(value)
-            values.append(key)
 
         for edge_value in copied_graph.get(edge):
             if edge_value in graph:
@@ -80,6 +85,5 @@ def bridges(graph, is_oriented: bool):
                 else:
                     tuple_add = (edge, edge_value)
                     bridges_list.append(tuple_add)
-
 
     return bridges_list
