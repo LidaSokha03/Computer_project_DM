@@ -1,25 +1,16 @@
-'''Функція для пошуку компонентів сильної зв'язності в орієнтованому графі'''
+'''A function for finding strongly connected components in a directed graph'''
 
-graph_ = {
-    0: [2],
-    1: [0,3],
-    2: [1, 3, 4],
-    3: [5],
-    4: [5, 6],
-    5: [3],
-    6: [4,7],
-    7: [5,6]}
 
 def kosaraju_scc(graph, is_oriented: bool):
     """
-    Знаходить компоненти сильної зв'язності (SCC) орієнтованого графа.
+    Finds strongly connected components (SCC) of a directed graph.
 
-    :param graph: dict, Словник, що представляє граф у вигляді списку суміжності.
-                      Ключі — вершини, значення — список сусідніх вершин.
+    :param graph: dict, A dictionary representing a graph in the form of an adjacency list.
+                        Keys are vertices, values ​​are a list of neighboring vertices.
+    :param is_oriented: bool, True if graph is oriented, False if not
 
-    
-    :return: list[list[int]], Список компонент сильної зв'язності. 
-                         Кожна компонента представлена як список вершин.
+    :return: list[list[int]], List of components of strong connectivity. 
+    Each component is represented as a list of vertices.
     >>> kosaraju_scc(graph_)
     [[0, 1, 2], [4, 6, 7], [3, 5]]
     """
@@ -50,8 +41,8 @@ def kosaraju_scc(graph, is_oriented: bool):
 
 def dfs(vertex, visited, stack,graph):
     """
-    Функція для обходу графа у глибину (DFS).
-    Додає вершини в стек у порядку завершення обробки.
+    A function for depth-first graph traversal (DFS).
+    Adds vertices to the stack in order of completion.
 
     :param vertex: int, Current vertex.
     :param visited: dict, Dictionary, that that contains the information if vertex is visited.
@@ -69,7 +60,7 @@ def dfs(vertex, visited, stack,graph):
 
 def transpose_graph(graph):
     """
-    Створює обернений граф (змінює напрямок усіх ребер).
+    Creates an inverted graph (changes the direction of all edges).
 
     :param graph: dict, Original graph.
     :return: dict, Transpone graph.
@@ -87,8 +78,8 @@ def transpose_graph(graph):
 
 def dfs_scc(vertex, visited, component, transposed_graph):
     """
-    Функція для пошуку компонент сильної зв'язності
-    у оберненому графі.
+    A function for finding components of strong connectivity
+    in the inverse graph.
 
     :param vertex: int, Current vertex.
     :param visited: dict, Dictionary, that that contains the information if vertex is visited.
