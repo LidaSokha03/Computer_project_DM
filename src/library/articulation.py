@@ -57,33 +57,51 @@ def bridges(graph, is_oriented: bool):
     """
     Find all bridges in an undirected graph.
     Returns a list of tuples of bridges.
-    >>> graph = {\
-    1: [2],\
-    2: [1, 3],\
-    3: [2],\
-    5: [6],\
-    6: [5]\
-    }
-    >>> bridges(graph, is_oriented=False)
-    [(1, 2), (2, 3), (5, 6)]
+    >>> bridges({'1': ['5', '3'], '5': ['1', '4'], '6': ['4'],\
+ '4': ['6', '5'], '3': ['1'], '2': ['7'], '7': ['2']}, False)
+    [('4', '6'), ('5', '4'), ('1', '5'), ('1', '3'), ('2', '7')]
+    >>> bridges({0: [1, 2], 1: [0, 2, 3, 4, 6], 2: [0, 1], 3:\
+ [1, 5], 4: [1, 5], 5: [3 ,4], 6: [1]}, False)
+    [(1, 6)]
     """
     if is_oriented:
         raise ValueError('The graph is oriented.')
 
     bridges_list = []
-    copied_graph = graph.copy()
-    for edge in copied_graph:
-        graph.pop(edge)
 
-        for edge_value in copied_graph.get(edge):
-            if edge_value in graph:
-                pass
-            else:
-                if edge in copied_graph.get(edge_value):
-                    tuple_add = (edge_value, edge)
-                    bridges_list.append(tuple_add)
-                else:
-                    tuple_add = (edge, edge_value)
-                    bridges_list.append(tuple_add)
+    def dfs_func(node_new, node_old, way_length):
+        '''
+        Function of DFS algorithm that visits all nodes in graph.
+        '''
+        visited[node_new] = True
+        first_visit_way[node_new] = way_length
+        minimum_way[node_new] = way_length
+        way_length += 1
+
+
+        for connected_node in graph.get(node_new):
+            if not visited[connected_node]:
+                dfs_func(connected_node, node_new, way_length)
+
+                minimum_way[node_new] = min(minimum_way[node_new], minimum_way[connected_node])
+
+                if minimum_way[connected_node] > first_visit_way[node_new]:
+                    bridges_list.append((node_new, connected_node))
+            elif connected_node != node_old:
+                minimum_way[node_new] = min(minimum_way[node_new], first_visit_way[connected_node])
+
+
+    way_length = 0
+    visited = {}
+    first_visit_way = {}
+    minimum_way = {}
+    for node in graph:
+        visited[node] = False
+        first_visit_way[node] = 0
+        minimum_way[node] = 0
+
+    for node in graph:
+        if not visited[node]:
+            dfs_func(node, None, way_length)
 
     return bridges_list
