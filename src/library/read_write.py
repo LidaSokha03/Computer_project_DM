@@ -39,6 +39,9 @@ def write_graph(graph, new_filename):
     :param new_filename: str, new file name
     :return: None
     """
+    if new_filename == '':
+        new_filename = 'new_graph'
+    
     with open(new_filename, 'w', encoding='utf-8') as file:
         for main_node, else_nodes in graph.items():
             for node in else_nodes:

@@ -7,6 +7,7 @@ from library.articulation import bridges
 from library.components import find_conn_comp
 from library.graph_visual import graph_visualization
 from library.read_write import read_graph
+from library.read_write import write_graph
 from library.strong_con import kosaraju_scc
 
 
@@ -25,6 +26,15 @@ def main():
         "--is_oriented",
         action = 'store_true',
         help="Oriented/Disoriented")
+    parser.add_argument(
+        "--file_path_save",
+        type=str,
+        default='graph',
+        help="Path to new file")
+    parser.add_argument(
+        "--save_to_file",
+        action = 'store_true',
+        help="Saving graph to file")
     parser.add_argument(
         "--connectivity",
         action = 'store_true',
@@ -72,6 +82,13 @@ def main():
 
     elif args.visualisation:
         graph_visualization(graph, oriented)
+
+    elif args.save_to_file:
+        file_to_save = args.file_path_save
+        if '.' not in file_to_save:
+            file_to_save += '.csv'
+        write_graph(graph, file_to_save)
+        print(f"Graph saved to {file_to_save}")
 
     else:
         print("Error. You should choose any function.")
